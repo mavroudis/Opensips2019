@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	addr = "134.209.167.66"
+	addr = "12.34.57.78"
 	port = 8020
 	eslURL = "127.0.0.1:8021"
 	eslPWD = "ClueCon"
