@@ -67,7 +67,7 @@ func sendESL(b *Broker) {
 		if strings.Contains(e.Get("Job-Command"), strings.SplitN(b.Request," ",2)[0]) {
 			b.Response = e.Body
 			c.Close()
-			break
+			return
 		}
 	}
 }
