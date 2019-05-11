@@ -38,9 +38,11 @@ func sendESL(b *Broker) {
 		e, err := c.ReadEvent()
 		check(err)
 		if strings.Contains(e.Get("Job-Command"), "user_data") {
-			if e.Body == b.Password  {
-				b.Authorized = true
+			if e.Body == b.Password {
 				break
+			} else {
+				c.Close()
+				return
 			}
 		}
 	}
@@ -53,7 +55,8 @@ func sendESL(b *Broker) {
 				b.Authorized = true
 				break
 			} else {
-				b.Authorized = false
+				c.Close()
+				return
 			}
 		}
 	}
@@ -63,10 +66,10 @@ func sendESL(b *Broker) {
 		check(err)
 		if strings.Contains(e.Get("Job-Command"), strings.SplitN(b.Request," ",2)[0]) {
 			b.Response = e.Body
+			c.Close()
 			break
 		}
 	}
-	c.Close()
 }
 
 func httpESL (w http.ResponseWriter, r *http.Request) {
